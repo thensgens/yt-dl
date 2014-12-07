@@ -8,6 +8,7 @@ import ConfigParser
 def main():
 	# populating important attributes from the properties file ('props.ini')
 	default_folder = read_config()
+	print default_folder
 	if default_folder == '' or default_folder is None:
 		default_folder = 'D:\Willi Hitz\Torben Youtube DL'	
 
@@ -79,7 +80,8 @@ def read_config():
 	try:
 		cfg_parser.read('props.ini')
 	except e:
-		pass
+		return None
+	return cfg_parser.get('GeneralSettings', 'OutputFolder')
 
 
 def dl_video(video_url, file_name):
