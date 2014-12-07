@@ -7,10 +7,17 @@ import ConfigParser
 
 def main():
 	# populating important attributes from the properties file ('props.ini')
-	default_folder = read_config()
-	print default_folder
-	if default_folder == '' or default_folder is None:
-		default_folder = 'D:\Willi Hitz\Torben Youtube DL'	
+	"""
+		default_folder = read_config()
+		if default_folder == '' or default_folder is None:
+			default_folder = 'D:\Willi Hitz\Torben Youtube DL'	
+
+		print default_folder
+		print 'D:\Willi Hitz\Torben Youtube DL'
+	"""
+	
+	default_folder = 'D:\Willi Hitz\Torben Youtube DL'	
+
 
 	""" 
 	Generel regexp for URLs
@@ -28,6 +35,7 @@ def main():
     r'^(?:http|ftp)s?://' # http:// or https://
    	r'www.youtube.com'
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
 	outer_loop = 'initial'
 
 	while outer_loop != 'e':
@@ -45,7 +53,7 @@ def main():
 			user_confirm = raw_input(title.encode('ascii', 'ignore') + ' -- Herunterladen (j/n)?  ')
 
 		#file_name = raw_input('Dateinamen eingeben (keine Umlaute): ')
-		file_name = title
+		file_name = title.encode('ascii', 'ignore')
 
 		file_exists = True
 		try:
@@ -56,6 +64,11 @@ def main():
 		# only download and convert the video if the file doesn't already exist
 		# (needed because ffmpeg will hang forever if the file already exists)
 		if not file_exists:
+			# sanity checks and possible replacements
+			file_name = file_name.replace('"', '')
+			file_name = file_name.replace('/', ' ')
+
+			file
 			file_names = ['\\'.join([default_folder, file_name]) + '.flv', '\\'.join([default_folder, file_name]) + '.mp3']
 
 			ret_val = dl_video(video_url, file_names[0])
@@ -66,7 +79,7 @@ def main():
 
 			del_files([file_names[0]])
 
-			# le non-crossplatform faec
+			# le non-cross platform faec
 			os.system('cls')
 		else:
 			# le non-crossplatform faec
@@ -86,7 +99,9 @@ def read_config():
 
 def dl_video(video_url, file_name):
 	print '=' * 30
-	p = subprocess.Popen(['youtube-dl', '-o', file_name, video_url], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+
+	p = subprocess.Popen(['youtube-dl', '-o', file_name, video_url], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	for line in p.stdout.readlines():
 		print line
 	print '=' * 30
@@ -96,8 +111,6 @@ def dl_video(video_url, file_name):
 def convert_to_mp3(input_file, output_file):
 	p = subprocess.Popen(['ffmpeg', '-i', input_file, '-f', 'mp3', output_file], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	p.communicate()
-
-
 
 
 def extract_title(video_url):
@@ -112,7 +125,8 @@ def del_files(file_names):
 		except:
 			pass
 
-def def_error_msg():
+
+def def_error_msg(file_names):
 	del_files(file_names)
 	raw_input('Fehler waehrend des Downloads. Programm wird beendet..')
 	exit(1)
