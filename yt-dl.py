@@ -42,7 +42,7 @@ def main():
 		user_confirm = 'n'
 		while user_confirm == 'n':
 			video_url = pyperclip.paste()
-			if type(video_url) != str and type(video_url) != buffer:
+			if type(video_url) != str and type(video_url) != unicode and type(video_url) != buffer:
 				raw_input('Keine gueltige (Youtube-)URL kopiert.')
 				exit(1)
 
