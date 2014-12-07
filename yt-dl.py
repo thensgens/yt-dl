@@ -6,7 +6,10 @@ import youtube_dl
 import ConfigParser
 
 def main():
-	default_folder = 'D:\Willi Hitz\Torben Youtube DL'
+	# populating important attributes from the properties file ('props.ini')
+	default_folder = read_config()
+	if default_folder == '' or default_folder is None:
+		default_folder = 'D:\Willi Hitz\Torben Youtube DL'	
 
 	""" 
 	Generel regexp for URLs
@@ -71,14 +74,12 @@ def main():
 		outer_loop = raw_input('Neue URL kopieren und mit "ENTER" bestaetigen oder "e", um das Programm zu beenden:  ')
 
 
-"""
 def read_config():
 	cfg_parser = ConfigParser.ConfigParser()
 	try:
 		cfg_parser.read('props.ini')
 	except e:
-		print e
-"""
+		pass
 
 
 def dl_video(video_url, file_name):
