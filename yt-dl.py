@@ -50,10 +50,8 @@ def main():
 			title = extract_title(video_url)
 			# le non-crossplatform faec
 			os.system('cls')
-			user_confirm = raw_input(title.encode('ascii', 'ignore') + ' -- Herunterladen (j/n)?  ')
-
-		#file_name = raw_input('Dateinamen eingeben (keine Umlaute): ')
-		file_name = title.encode('ascii', 'ignore')
+			file_name = remove_reserved_chars(title).encode('ascii', 'ignore')
+			user_confirm = raw_input(file_name + ' -- Herunterladen (j/n)?  ')
 
 		file_exists = True
 		try:
@@ -64,11 +62,6 @@ def main():
 		# only download and convert the video if the file doesn't already exist
 		# (needed because ffmpeg will hang forever if the file already exists)
 		if not file_exists:
-			# sanity checks and possible replacements
-			file_name = file_name.replace('"', '')
-			file_name = file_name.replace('/', ' ')
-
-			file
 			file_names = ['\\'.join([default_folder, file_name]) + '.flv', '\\'.join([default_folder, file_name]) + '.mp3']
 
 			ret_val = dl_video(video_url, file_names[0])
@@ -86,6 +79,23 @@ def main():
 			os.system('cls')
 			print 'Datei wurde bereits heruntergeladen.'
 		outer_loop = raw_input('Neue URL kopieren und mit "ENTER" bestaetigen oder "e", um das Programm zu beenden:  ')
+
+
+	"""
+	Remove reserved chars for file names on the windows platform
+	"""
+def remove_reserved_chars(file_name):
+	file_name = file_name.replace('"', '')
+	file_name = file_name.replace('/', ' ')
+	file_name = file_name.replace('~', ' ')
+	file_name = file_name.replace('|', ' ')
+	file_name = file_name.replace('<', ' ')
+	file_name = file_name.replace('>', ' ')
+	file_name = file_name.replace('*', ' ')
+	file_name = file_name.replace('?', ' ')
+	file_name = file_name.replace(':', ' ')
+	file_name = file_name.replace('\\', ' ')
+	return file_name
 
 
 def read_config():
