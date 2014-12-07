@@ -35,7 +35,7 @@ def main():
 			video_url = pyperclip.paste()
 
 			while url_regex_yt.match(video_url) is None:
-				raw_input('Keine gueltige URL im Clipboard. Bitte eine URL kopieren und anschliessend hier mit "ENTER" bestaetigen:  ')
+				raw_input('Keine gueltige (Youtube-)URL im Clipboard. Bitte eine URL kopieren und anschliessend hier mit "ENTER" bestaetigen:  ')
 				video_url = pyperclip.paste()
 
 			title = extract_title(video_url)
