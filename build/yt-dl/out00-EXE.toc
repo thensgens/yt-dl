@@ -1,0 +1,9 @@
+('D:\\Torben\\yt-dl\\dist\\yt-dl.exe',
+ True,
+ False,
+ 'icons\\yt-icon_rsz.ico',
+ None,
+ [],
+ None,
+ False,
+ 1423396519L)
