@@ -7,10 +7,11 @@ import youtube_dl
 import ConfigParser
 from config import ConfigProperties
 
-CONST_DEFAULT_OUTPUT_DIR = os.path.expandvars('%HOMEDRIVE%\%HOMEPATH%\Youtube Downloader')
+CONST_DEFAULT_OUTPUT_DIR = os.path.expandvars('%USERPROFILE%\Music')
 
 def main():
 
+	# TODO: bundle ffmpeg and youtube-dl for a single binary
 	#__test_bundled_ffmpeg()
 
 	props = read_config()
@@ -100,18 +101,12 @@ def remove_reserved_chars(file_name):
 
 
 def read_config():
-	props_cfg_path = os.path.expandvars('%HOMEDRIVE%\%HOMEPATH%\yt-dl_props.ini')
+	props_cfg_path = os.path.expandvars('%HOMEDRIVE%%HOMEPATH%\yt-dl_props.ini')
 	cfg_parser = ConfigParser.ConfigParser()
 	res = cfg_parser.read(props_cfg_path)
 	if not res:
 		write_default_config(cfg_parser, props_cfg_path)
 	return populateProperties(cfg_parser)
-
-
-def populateProperties(parser):
-	props = ConfigProperties()
-	props.output_dir = parser.get('GeneralSettings', 'OutputDir')
-	return props
 
 
 def write_default_config(parser, path):
@@ -120,6 +115,12 @@ def write_default_config(parser, path):
 	with open(path, 'w') as cfgfile:
 		parser.write(cfgfile)
 
+
+def populateProperties(parser):
+	props = ConfigProperties()
+	props.output_dir = parser.get('GeneralSettings', 'OutputDir')
+	# add more attributes here if necessary
+	return props
 
 def dl_video(video_url, file_name):
 	print '=' * 30

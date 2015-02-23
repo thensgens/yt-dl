@@ -4,7 +4,6 @@ a = Analysis(['yt-dl.py'],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)
-
 pyz = PYZ(a.pure)
 exe = EXE(pyz,
           a.scripts,
@@ -16,13 +15,3 @@ exe = EXE(pyz,
           strip=None,
           upx=True,
           console=True , icon='icons\\yt-icon_rsz.ico')
-
-"""
-resources = []
-ffmpeg = r'D:\Torben\bin\ffmpeg.exe'
-if not os.path.exists(ffmpeg): raise RuntimeError("Unable to find ffmpeg at " + ffmpeg)
-resources.append(('ffmpeg.exe', ffmpeg, 'DATA'))
-
-
-#a.binaries + [('ffmpeg', r'D:\Torben\bin\ffmpeg.exe', 'DATA')],
-"""
