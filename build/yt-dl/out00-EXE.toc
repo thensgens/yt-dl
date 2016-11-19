@@ -1,4 +1,4 @@
-('D:\\Torben\\yt-dl\\dist\\yt-dl.exe',
+('C:\\Users\\thens\\software\\yt-dl\\dist\\yt-dl.exe',
  True,
  False,
  'icons\\yt-icon_rsz.ico',
@@ -6,4 +6,4 @@
  [],
  None,
  False,
- 1424703440L)
+ 1479543636L)

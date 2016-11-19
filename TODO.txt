@@ -1,5 +1,4 @@
 TODO yt-dl:
 
 - pyinstaller -> bundle ffmpeg and youtube-dl and export the application as a single binary (alternatively, add all required files to a bundle)
-- check for files with '*.flv.part and re-download them manually if they haven't been downloaded already (and delete the parts)
 - fully support cross-platform

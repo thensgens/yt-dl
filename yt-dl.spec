@@ -1,6 +1,6 @@
 # -*- mode: python -*-
 a = Analysis(['yt-dl.py'],
-             pathex=['D:\\Torben\\yt-dl'],
+             pathex=['C:\\Users\\thens\\software\\yt-dl'],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)
