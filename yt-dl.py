@@ -110,7 +110,7 @@ def read_config():
     res = cfg_parser.read(props_cfg_path)
     if not res:
         write_default_config(cfg_parser, props_cfg_path)
-    return populateProperties(cfg_parser)
+    return populate_properties(cfg_parser)
 
 
 def write_default_config(parser, path):
@@ -120,7 +120,7 @@ def write_default_config(parser, path):
         parser.write(cfgfile)
 
 
-def populateProperties(parser):
+def populate_properties(parser):
     props = ConfigProperties()
     props.output_dir = parser.get('GeneralSettings', 'OutputDir')
     # add more attributes here if necessary
