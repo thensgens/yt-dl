@@ -22,7 +22,7 @@ def main():
     # Regexp for youtube domain only
     url_regex_yt = re.compile(
     r'^(?:http|ftp)s?://' # http:// or https://
-    r'www.youtube.com'
+    r'(www.youtube.com|youtu.be)'
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     
     outer_loop = 'initial'
@@ -36,13 +36,14 @@ def main():
                 video_url = pyperclip.paste()
 
             title_result, success = extract_title(video_url)
-            if not success:
-                raw_input(title_result)
-                continue
-
-            # le non-crossplatform faec
             os.system('cls')
-            file_name = remove_reserved_chars(title_result).encode('ascii', 'ignore')
+            if success:
+                file_name = remove_reserved_chars(title_result).encode('ascii', 'ignore')
+            else:
+                file_name = raw_input('Titel konnte nicht extrahiert werden.\n'
+                                      'Bitte Dateinamen manuell eingeben (keine Umlaute):  ')
+                file_name = remove_reserved_chars(file_name)
+                os.system('cls')
             user_confirm = raw_input(file_name + ' -- Herunterladen (j/n)?  ')
 
         file_exists = True
@@ -145,11 +146,11 @@ def extract_title(video_url):
     ydl_opts = {}
     result = None
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(video_url, process=False)
         try:
+            info = ydl.extract_info(video_url, process=False)
             result = info['title'], True
-        except KeyError:
-            result = 'Kein Youtube-Video ausgesucht. Bitte neue URL kopieren.', False
+        except Exception:
+            result = 'Kein Youtube-Video ausgesucht oder allgemeiner Fehler.', False
     return result
 
 
